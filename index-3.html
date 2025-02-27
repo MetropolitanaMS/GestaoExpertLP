@@ -775,19 +775,15 @@
                 Agende uma demonstração e descubra como podemos transformar seu
                 órgão público
               </h2>
-              <form
-                action="assets/mail/contact.php"
-                method="POST"
-                class="contact-form"
-              >
+              <form class="contact-form">
                 <div class="row">
                   <div class="col-lg-12">
                     <div class="form-group">
                       <i class="fas fa-user"></i>
                       <input
                         class="form-control"
-                        id="name"
-                        name="name"
+                        id="entry.714711907"
+                        name="entry.714711907"
                         placeholder="Nome"
                         type="text"
                       />
@@ -801,8 +797,8 @@
                       <i class="fas fa-envelope"></i>
                       <input
                         class="form-control"
-                        id="email"
-                        name="email"
+                        id="entry.1016701183"
+                        name="entry.1016701183"
                         placeholder="Email*"
                         type="email"
                       />
@@ -814,8 +810,8 @@
                       <i class="fas fa-phone"></i>
                       <input
                         class="form-control"
-                        id="phone"
-                        name="phone"
+                        id="entry.839476559"
+                        name="entry.839476559"
                         placeholder="Telefone"
                         type="text"
                       />
@@ -829,8 +825,8 @@
                       <i class="fas fa-edit"></i>
                       <textarea
                         class="form-control"
-                        id="comments"
-                        name="comments"
+                        id="entry.1634554235"
+                        name="entry.1634554235"
                         placeholder="Você representa qual instituição? *"
                       ></textarea>
                     </div>
@@ -838,7 +834,7 @@
                 </div>
                 <div class="row">
                   <div class="col-lg-12">
-                    <button type="submit" name="submit" id="submit">
+                    <button type="submit">
                       Enviar mensagem <i class="fa fa-paper-plane"></i>
                     </button>
                   </div>
@@ -1033,5 +1029,70 @@
     <script src="assets/js/YTPlayer.min.js"></script>
     <script src="assets/js/bootsnav.js"></script>
     <script src="assets/js/main.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector(".contact-form");
+
+        form.addEventListener("submit", function (event) {
+          console.log("entrou");
+
+          // Previne o comportamento padrão de submissão do formulário
+          event.preventDefault();
+
+          // Validação básica do formulário
+          const nome = document.getElementById("entry.714711907").value;
+          const email = document.getElementById("entry.1016701183").value;
+          const phone = document.getElementById("entry.839476559").value;
+          const instituicao = document.getElementById("entry.1634554235").value;
+
+          if (!nome) {
+            alert("Por favor, preencha o campo de nome.");
+            return;
+          }
+
+          if (!email) {
+            alert("Por favor, preencha o campo de e-mail.");
+            return;
+          }
+
+          if (!phone) {
+            alert("Por favor, preencha o campo de telefone.");
+            return;
+          }
+
+          if (!instituicao) {
+            alert(
+              "Por favor, preencha o campo de instituição que você representa."
+            );
+            return;
+          }
+
+          // Cria um objeto FormData com os dados do formulário
+          const formData = new FormData(form);
+
+          // Envia os dados via fetch API
+          fetch(
+            "https://docs.google.com/forms/u/0/d/e/1FAIpQLSe5ysjzVs8h0LG0GCIq29uqaOgVsd7_u_7cgaT3Ush13D12-Q/formResponse",
+            {
+              method: "POST",
+              body: formData,
+              mode: "no-cors", // Importante: o Google Forms requer este modo
+            }
+          )
+            .then((response) => {
+              alert(
+                "Mensagem enviada com sucesso! Em breve entraremos em contato."
+              );
+              form.reset();
+            })
+            .catch((error) => {
+              alert(
+                "Ocorreu um erro ao enviar a mensagem. Por favor, tente novamente."
+              );
+              console.error("Erro:", error);
+            });
+        });
+      });
+    </script>
   </body>
 </html>
